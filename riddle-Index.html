@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Riddle Book</title>
+    <link rel=stylesheet type="text/css" href="style.css">
+  </head>
+  <body>
+    <div class=page>
+    <h2>Riddle Book</h2>
+      <h2> Riddle Submission: </h2>
+      <div>
+          <div>
+            <label for="riddleToGuess">Riddle: </label>
+            <input id='riddleToGuess' type='text' name='riddleToGuess'>
+          </div>
+          <div>
+            <label for="answer">Answer: </label><br>
+            <textarea id="answer" rows=2 cols=50 name="answer"></textarea>
+          </div>
+          <div>
+            <label for="prizeBounty">Prize: </label>
+            <input id='prizeBounty' type='text' name='prizeBounty'>
+          </div>
+          <button id="submitRiddle" onclick="addRiddle()">Submit Riddle</button> 
+      </div>
+      <h2>Guess Submission: </h2>
+      <h3> Riddle: <span id="riddleToG"></span></h3>
+      <div>Guess Cost: <span id="bounty"></span></div>
+      <div>Account: <span id="account"></span></div>
+      <div>
+          <div>
+            <label for="name">Name: </label>
+            <input id='name' type='text' name='name'>
+          </div>
+          <div>
+            <label for="guess">Guess: </label><br>
+            <textarea id="guess" rows=2 cols=50 name="guess"></textarea>
+          </div>
+          <button id="sign">Submit Guess</button>
+      </div>
+    <h2>Riddle Guesses Submitted: </h2>
+      <div id="entries"></div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script type="text/javascript" src="riddle.js"></script>
+    <script type="text/javascript">
+      updateBounty();
+      updateAccount();
+      updateEntries();
+    </script>
+    </div>
+  </body>
+</html> 
