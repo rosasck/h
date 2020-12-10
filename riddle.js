@@ -15,7 +15,7 @@ window.ethereum.enable();
  * Grab address of contract on the blockchain and fill it in.
  * Use the web3 client to instantiate the contract within program */
 var RiddleABI = [{"name":"Entry","inputs":[{"type":"uint256","name":"value","indexed":false}],"anonymous":false,"type":"event"},{"outputs":[],"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"name":"input_riddle","outputs":[],"inputs":[{"type":"string","name":"entry"},{"type":"string","name":"answer"},{"type":"uint256","name":"bounty"}],"stateMutability":"payable","type":"function","gas":704969},{"name":"riddle_guess","outputs":[],"inputs":[{"type":"string","name":"name"},{"type":"string","name":"guess"}],"stateMutability":"payable","type":"function","gas":1928665},{"name":"cashOut","outputs":[],"inputs":[],"stateMutability":"nonpayable","type":"function","gas":26229},{"stateMutability":"payable","type":"fallback"},{"name":"owner","outputs":[{"type":"address","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":1301},{"name":"riddle_submission","outputs":[{"type":"bool","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":1331},{"name":"re","outputs":[{"type":"address","name":"signer"},{"type":"string","name":"name"},{"type":"string","name":"guess"},{"type":"uint256","name":"date"},{"type":"uint256","name":"bounty_entry"}],"inputs":[{"type":"uint256","name":"arg0"}],"stateMutability":"view","type":"function","gas":19516},{"name":"rv","outputs":[{"type":"address","name":"signer"},{"type":"string","name":"riddle_question"},{"type":"string","name":"riddle_answer"},{"type":"uint256","name":"prize"}],"inputs":[],"stateMutability":"view","type":"function","gas":27249},{"name":"bounty","outputs":[{"type":"uint256","name":""}],"inputs":[],"stateMutability":"view","type":"function","gas":1421}];
-var Riddle = new web3.eth.Contract(RiddleABI,'0xb7961412d7a108fef0e85282e29ecbf0eda4726a');
+var Riddle = new web3.eth.Contract(RiddleABI,'0x739845414056a9485a53Ea96a481bc44f023f1a7');
 /* ================================================================================*/
 /* Update the UI with current wallet account address when called */
 async function updateAccount() {
@@ -35,22 +35,29 @@ async function addRiddle(){
     const riddle = document.getElementById("riddleToGuess").value;
     const answer = document.getElementById("answer").value;
     const prize = document.getElementById("prizeBounty").value;
-    bid = prize;
+    document.getElementById("riddleToG").innerHTML= document.getElementById("riddleToGuess").value;
+    bid = parseInt(prize);
     const transactionParameters = {
             from: account,
             gasPrice: 0x1D91CA3600,
             value: bid
     };
-    document.getElementById("riddleToGuess").innerHTML="";
+    updateRiddle();
+    document.getElementById("riddleToGuess").innerText="";
     document.getElementById("answer").innerHTML="";
     document.getElementById("prizeBounty").innerHTML=""; 
-    updateRiddle(riddle);
 
     await Riddle.methods.input_riddle(riddle,answer, prize).send(transactionParameters);
 }
 /* ================================================================================*/
-async function updateRiddle(string){
-    document.getElementById("riddleToG").innerHTML=string;
+function updateRiddle(){
+    console.log("We got to update riddle");
+    const riddle = document.getElementById("riddleToGuess").value;
+    const riddleToGuessNode = document.getElementById("riddleToGuess");
+    if (riddleToGuessNode.firstChild)
+    riddleToGuessNode.firstChild.remove();
+    var textnode = document.createTextNode(riddle);
+    riddleToGuessNode.appendChild(textnode);
 }
 /* ================================================================================*/
 /* Update the UI with current minimum bounty when called */
